@@ -1,44 +1,21 @@
 import json
 import re
 
-def add_elem_to_dict(dictionary, key, value):
-    dictionary[key] = value
-
-def filter_on_dict(entry_dic, entry_key, entry_value, useless_key=None):
-    new_dico = {}
-    for key, dico in entry_dic.items() :
-        for key2, value in dico.items() :
-            if(key2==str(entry_key) and value==str(entry_value)):
-                new_dico[key] = dico
-    return new_dico
-
-def gather_information(entry_dict, list_of_key):
-    list_of_sentence = []
-    for key, dico in entry_dict.items() :
-        for key in list_of_key:
-            list_of_sentence.append(dico[key])
-    return list_of_sentence
-
-#Not operationnal for the moment
-"""def remove_useless_key(entry_dic, list_of_keys):
-    edit_dict = entry_dic
-    for key in list_of_keys:
-        edit_dict.pop(key)
-    return edit_dict"""
-
-
+from ourFunction import add_elem_to_dict
+from ourFunction import filter_on_dict
+from ourFunction import gather_information
 
 decode = False
 
-try :
+try:
     with open('News_Category_Dataset_v2.json') as f:
         data = json.load(f)
-    decode=True
+    decode = True
 except ValueError:
     print("Decoding initial JSON file has failed")
 
-try :
-    if(decode==False):
+if not decode:
+    try:
         print("Trying to decode JSON file")
         file = open("News_Category_Dataset_v2.json", "r")
         lines = file.readlines()
@@ -47,20 +24,19 @@ try :
         with open('data.json', 'w') as outfile:
             json.dump(new_data, outfile)
         print("New json file generated ! ")
-except :
-    print("Decoding JSON has failed. Please correct your dataset")
+        with open('data.json') as f:
+            data = json.load(f)
+    except:
+        print("Decoding JSON has failed. Please correct your dataset")
 
-with open('data.json') as f:
-    data = json.load(f)
+# We filter our data in order to get a specific small sample
+filtered_dict = filter_on_dict(data, "category", "WORLD NEWS")
 
-useless_keys = ['link']
-test = filter_on_dict(data, "category", "WORLD NEWS", useless_keys)
-"""print(type(test))
-print(test.keys())"""
-print(test["11"])
-
+# We decide to keep only value in 'headline' and 'short_description'
 keeped_information = ["headline", "short_description"]
-gathered_data = gather_information(test, keeped_information)
+# All the data is stock in a list : gathered_data
+gathered_data = gather_information(filtered_dict, keeped_information)
 
-corpus = ([re.sub(r'[^\w\s]', '',  gathered_data[x].lower()).split() for x in range(len(gathered_data))])
+# Split each sentence in list of word without punctuations and text as lower()
+corpus = ([re.sub(r'[^\w\s]', '', gathered_data[x].lower()).split() for x in range(len(gathered_data))])
 print(corpus[0:2])
