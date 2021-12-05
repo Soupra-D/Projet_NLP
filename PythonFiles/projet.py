@@ -8,7 +8,7 @@ from ourFunction import gather_information
 decode = False
 
 try:
-    with open('News_Category_Dataset_v2.json') as f:
+    with open('../News_Category_Dataset_v2.json') as f:
         data = json.load(f)
     decode = True
 except ValueError:
@@ -17,7 +17,7 @@ except ValueError:
 if not decode:
     try:
         print("Trying to decode JSON file")
-        file = open("News_Category_Dataset_v2.json", "r")
+        file = open("../News_Category_Dataset_v2.json", "r")
         lines = file.readlines()
         new_data = {}
         [(add_elem_to_dict(new_data, idx, json.loads(elem))) for idx, elem in enumerate(lines)]
