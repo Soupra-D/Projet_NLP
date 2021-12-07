@@ -4,14 +4,19 @@ Projet NLP de 5A Esiea
 ## Contexte
 
 Le Topic Modeling est un sous-champ du Natural Language Processing visant à extraire les sujets de discussions principaux d’un corpus de texte.
-Cette problématique est donc un sujet non-supervisé.
 
-Dans le cadre de ce projet, le jeu de données utilisé est : News Category Dataset
-Il contenant 200K headlines de journaux en anglais.
+Cette problématique est donc un sujet non-supervisé.
+ 
+	
+Dans le cadre de ce projet, le jeu de données utilisé est : News Category Dataset.
+
+Il contient 200K headlines de journaux en anglais.
+
 
 ## Objectif 
 
 L’objectif de ce projet est d’étudier les performances d’algorithmes de Topic Modeling sur les données mentionnées ci-avant.
+	
 
 ## Réalisation
 
